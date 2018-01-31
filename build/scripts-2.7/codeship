@@ -35,6 +35,7 @@ subparsers = parser.add_subparsers(help='commands')
 # A create command
 search_parser = subparsers.add_parser(
     'search', help='Search some text in the projects')
+search_parser.add_argument('--project-name-only', action='store_true', help='foo help')
 search_parser.add_argument(
     'search_action', action='store',
     help='codeship search <some_text>')
@@ -65,13 +66,12 @@ if not config['organization']:
     raise RequiredParamException("organization is required!")
 
 account_password = getpass.getpass(prompt='Codeship password: ')
+
 api = CodeShipAPI(organization_name=config['organization'], username=config['username'], password=account_password)
 
 if 'search_action' in args:
     print("Searching...")
-    def callback(project, uuid, count):
-        print("-> uuid=%s: %s (%s occurrences)" % (uuid, project, count))
-    search.command(api=api, term=args.search_action, callback=callback)
+    search.command(api=api, args=args, term=args.search_action)
 
 if 'info_action' in args:
     print("Info project %s" % args.info_action)
