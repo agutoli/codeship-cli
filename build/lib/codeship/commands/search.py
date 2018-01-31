@@ -13,13 +13,14 @@ def find_term_in_result(result, term, callback):
         if not (term in text):
             continue
 
-        print("-> uuid=%s: %s\n" % (uuid, name))
+        print("\033[92m -> uuid=%s: %s\033[00m" % (uuid, name))
         lines = json.dumps(project, indent=2).split('\n')
         for i, line in enumerate(lines):
             count = line.count(term)
             if count > 0:
                 # callback(project['name'], project['uuid'], count)
                 print("%s: %s" % (i, line.replace(term, '\x1b[6;30;42m' + term + '\x1b[0m')))
+        print "\n"
 
 def async_find_term_in_result(api, page, term, callback):
     result = api.list_projects(page=page)
