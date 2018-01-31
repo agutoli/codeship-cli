@@ -1,0 +1,3 @@
+
+class RequiredParamException(Exception):
+    pass

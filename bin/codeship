@@ -1,0 +1,78 @@
+#!/usr/bin/env python
+import yaml
+import getpass
+import os.path
+from codeship.errors import RequiredParamException
+import argparse
+import sys, os
+
+from codeship.api import CodeShipAPI
+from codeship.commands import importer, search, info, configure
+
+configFile = os.path.expanduser(os.path.join("~/", ".codeship"))
+
+def loadConfig(filename):
+    try:
+        with open(filename, 'r') as stream:
+            try:
+                return yaml.load(stream)
+            except yaml.YAMLError as exc:
+                print(exc)
+                return None
+    except IOError:
+        pass
+
+config = loadConfig(configFile)
+
+if not config:
+    print "## Can not find configuration file ##"
+    configure.command()
+    exit()
+
+parser = argparse.ArgumentParser()
+subparsers = parser.add_subparsers(help='commands')
+
+# A create command
+search_parser = subparsers.add_parser(
+    'search', help='Search some text in the projects')
+search_parser.add_argument(
+    'search_action', action='store',
+    help='codeship search <some_text>')
+
+info_parser = subparsers.add_parser(
+    'info', help='Show info about a project')
+info_parser.add_argument(
+    'info_action', action='store',
+    help='codeship info <project_uuid>')
+
+configure_parser = subparsers.add_parser(
+    'configure', help='Configure ')
+configure_parser.add_argument(
+    'configure_action', action='store_true',
+    help='codeship configure <your@mail.com>|<username>')
+
+args = parser.parse_args()
+
+if 'configure_action' in args:
+    print("Configuring...")
+    configure.command()
+    exit()
+
+if not config['username']:
+    raise RequiredParamException("username is required!")
+
+if not config['organization']:
+    raise RequiredParamException("organization is required!")
+
+account_password = getpass.getpass(prompt='Codeship password: ')
+api = CodeShipAPI(organization_name=config['organization'], username=config['username'], password=account_password)
+
+if 'search_action' in args:
+    print("Searching...")
+    def callback(project, uuid, count):
+        print("-> uuid=%s: %s (%s occurrences)" % (uuid, project, count))
+    search.command(api=api, term=args.search_action, callback=callback)
+
+if 'info_action' in args:
+    print("Info project %s" % args.info_action)
+    info.command(api=api, project_uuid=args.info_action)
