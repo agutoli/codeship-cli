@@ -12,23 +12,28 @@ Note: This library is not published at pypi
 
 ## Configure
 
-`$ codeship configure`
-`$ -> Codeship username: yourusername@corp.com`
-`$ -> Codeship organization: YOUR-COMPANY-AT-CODESHIP`
-`$ Saved at /Users/your_home/.codeship`
+```shell
+$ codeship configure
+$ -> Codeship username: yourusername@corp.com
+$ -> Codeship organization: YOUR-COMPANY-AT-CODESHIP
+$ Saved at /Users/your_home/.codeship
+```
 
 ## Commands
 
   * /search
 
+    ```shell
     $ codeship search MY-SEARCH-TERM
     Codeship password: ****
     Searching...
     -> uuid=99999999-9999-9999-9999-999999999999: My_Company/some-project (26 occurrences)
     -> uuid=88888888-8888-8888-8888-888888888888: My_Company/other-project (51 occurrences)
+    ```
 
   * /info
 
+    ```shell
     $ codeship info 99999999-9999-9999-9999-999999999999
     Codeship password: ****
     Info project 99999999-9999-9999-9999-999999999999
@@ -45,3 +50,4 @@ Note: This library is not published at pypi
         - ls -la
       position: 1
       ...
+    ```
