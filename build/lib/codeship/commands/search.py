@@ -1,13 +1,25 @@
 import multiprocessing
 import json
 import math
+import re
 
 def find_term_in_result(result, term, callback):
     projects = result['projects']
     for project in projects:
-        count = json.dumps(project).count(term)
-        if count > 0:
-            callback(project['name'], project['uuid'], count)
+        text = json.dumps(project, indent=2)
+        name = project['name']
+        uuid = project['uuid']
+
+        if not (term in text):
+            continue
+
+        print("-> uuid=%s: %s\n" % (uuid, name))
+        lines = json.dumps(project, indent=2).split('\n')
+        for i, line in enumerate(lines):
+            count = line.count(term)
+            if count > 0:
+                # callback(project['name'], project['uuid'], count)
+                print("%s: %s" % (i, line.replace(term, '\x1b[6;30;42m' + term + '\x1b[0m')))
 
 def async_find_term_in_result(api, page, term, callback):
     result = api.list_projects(page=page)
