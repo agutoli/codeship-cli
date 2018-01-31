@@ -12,16 +12,17 @@ class CodeShipAPI(object):
 
         self.auth = self.auth()
 
+
     def get_project(self, project_uuid):
         try:
             return self.GET("/organizations/%s/projects/%s" % (self.organization_uuid, project_uuid))
-        except:
+        except Exception as e:
             return None
 
     def list_projects(self, page=1):
         try:
             return self.GET("/organizations/%s/projects?page=%s" % (self.organization_uuid, page))
-        except:
+        except Exception as e:
             return None
 
     def create_project(self,
@@ -42,13 +43,15 @@ class CodeShipAPI(object):
             }
             return self.POST("/organizations/%s/projects" % self.organization_uuid, body=body)
         except Exception as e:
-            print e
             return None
 
     def auth(self):
         headers = {"content-type": "application/json"}
         auth = HTTPBasicAuth(self.username, self.password)
-        return json.loads(requests.post("https://api.codeship.com/v2/auth", auth=auth, headers=headers).content)
+        res = json.loads(requests.post("https://api.codeship.com/v2/auth", auth=auth, headers=headers).content)
+        if ('errors' in res) and 'Unauthorized' in res['errors']:
+            raise Exception("Unauthorized!")
+        return res
 
     def res(self, http_response):
         return json.loads(http_response.content)
