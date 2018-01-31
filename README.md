@@ -21,7 +21,7 @@ $ Saved at /Users/your_home/.codeship
 
 ## Commands
 
-  * /search
+  * /search <text>
 
     ```shell
     $ codeship search MY-SEARCH-TERM
@@ -31,7 +31,7 @@ $ Saved at /Users/your_home/.codeship
     -> uuid=88888888-8888-8888-8888-888888888888: My_Company/other-project (51 occurrences)
     ```
 
-  * /info
+  * /info <uuid>
 
     ```shell
     $ codeship info 99999999-9999-9999-9999-999999999999
