@@ -1,4 +1,4 @@
-#!/Users/agutoli/.virtualenvs/impressora/bin/python
+#!/usr/bin/python
 import yaml
 import getpass
 import os.path

@@ -1,0 +1,16 @@
+setup.py
+bin/codeship
+codeship/__init__.py
+codeship/api.py
+codeship/errors.py
+codeship.egg-info/PKG-INFO
+codeship.egg-info/SOURCES.txt
+codeship.egg-info/dependency_links.txt
+codeship.egg-info/requires.txt
+codeship.egg-info/top_level.txt
+codeship/commands/__init__.py
+codeship/commands/configure.py
+codeship/commands/importer.py
+codeship/commands/info.py
+codeship/commands/search.py
+codeship/commands/show-envs.py
