@@ -1,4 +1,3 @@
-from api import CodeShipAPI
 import yaml
 import json
 
