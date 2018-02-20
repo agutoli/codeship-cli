@@ -2,12 +2,12 @@
 import yaml
 import getpass
 import os.path
-from codeship.errors import RequiredParamException
+from codeship_cli.errors import RequiredParamException
 import argparse
 import sys, os
 
-from codeship.api import CodeShipAPI
-from codeship.commands import importer, search, info, configure
+from codeship_cli.api import CodeShipAPI
+from codeship_cli.commands import importer, search, info, configure
 
 configFile = os.path.expanduser(os.path.join("~/", ".codeship"))
 

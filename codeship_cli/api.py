@@ -51,6 +51,8 @@ class CodeShipAPI(object):
         res = json.loads(requests.post("https://api.codeship.com/v2/auth", auth=auth, headers=headers).content)
         if ('errors' in res) and 'Unauthorized' in res['errors']:
             raise Exception("Unauthorized!")
+        if 'error' in res:
+            raise Exception(res['error'])
         return res
 
     def res(self, http_response):

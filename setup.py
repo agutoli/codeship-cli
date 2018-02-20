@@ -1,9 +1,9 @@
 from setuptools import setup
 
 setup(
-    name='codeship',
+    name='codeship_cli',
     version='0.0.1',
-    packages=['codeship', 'codeship.commands'],
+    packages=['codeship_cli', 'codeship_cli.commands'],
     scripts=['bin/codeship'],
     license='Codeship cli to manipulate projects',
     install_requires=[
