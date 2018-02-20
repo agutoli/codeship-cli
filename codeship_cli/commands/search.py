@@ -36,8 +36,6 @@ def command(api=None, args=None, term=None):
     jobs.append(p)
     p.start()
 
-    import ipdb; ipdb.set_trace()
-
     total=result["total"]
     current_page=result["page"]
     per_page=result["per_page"]
