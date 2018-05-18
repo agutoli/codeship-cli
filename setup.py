@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='codeship_cli',
-    version='0.0.3',
+    version='0.0.4',
     packages=['codeship_cli', 'codeship_cli.commands'],
     scripts=['bin/codeship'],
     license='Codeship cli to manipulate projects',

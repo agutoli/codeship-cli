@@ -58,6 +58,10 @@ def create_deployments(args):
             description="Deploy created by custom script",
             deploymentGroupName=deployment_group,
             deploymentConfigName=args.deployment_config_name,
+            autoRollbackConfiguration={
+                "enabled": True,
+                "events": [ "DEPLOYMENT_FAILURE" ]
+            },
             revision={
                 "revisionType": "S3",
                 "s3Location": {
