@@ -24,11 +24,6 @@ def loadConfig(filename):
 
 config = loadConfig(configFile)
 
-if not config:
-    print "## Can not find configuration file ##"
-    configure.command()
-    exit()
-
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers(help='commands')
 
@@ -79,6 +74,11 @@ if 'configure_action' in args:
     exit()
 
 def auth():
+    if not config:
+        print "## Can not find configuration file ##"
+        configure.command()
+        exit()
+
     if not config['username']:
         raise RequiredParamException("username is required!")
 
@@ -86,7 +86,7 @@ def auth():
         raise RequiredParamException("organization is required!")
 
     return getpass.getpass(prompt='Codeship password: ')
-print args
+
 if 'codedeploy_action' in args:
     print("AWS Codeploy...")
     codedeploy.command(args=args)
