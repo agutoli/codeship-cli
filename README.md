@@ -21,7 +21,7 @@ $ Saved at /Users/your_home/.codeship
 
 ## Commands
 
-  * /search [text]
+  * codeship search [text]
 
     ```shell
     $ codeship search MY-SEARCH-TERM
@@ -31,7 +31,7 @@ $ Saved at /Users/your_home/.codeship
     -> uuid=88888888-8888-8888-8888-888888888888: My_Company/other-project (51 occurrences)
     ```
 
-  * /info [uuid]
+  * codeship info [uuid]
 
     ```shell
     $ codeship info 99999999-9999-9999-9999-999999999999
@@ -51,3 +51,21 @@ $ Saved at /Users/your_home/.codeship
       position: 1
       ...
     ```
+
+  * codeship codedeploy [create|test]
+
+  ```shell
+    codeship codedeploy create
+      --deployment-group application_name_a:deployment_group_name_a \
+      --deployment-group application_name_b:deployment_group_name_b \
+      --s3-bucket my_bucket \
+      --s3-bucket-key my_bucket_key/your_project.zip
+  ```
+
+  ```shell
+    codeship codedeploy test
+      --deployment-group application_name_a:deployment_group_name_a \
+      --deployment-group application_name_b:deployment_group_name_b \
+      --s3-bucket my_bucket \
+      --s3-bucket-key my_bucket_key/your_project.zip
+  ```

@@ -7,7 +7,7 @@ import argparse
 import sys, os
 
 from codeship_cli.api import CodeShipAPI
-from codeship_cli.commands import importer, search, info, configure
+from codeship_cli.commands import importer, codedeploy, search, info, configure
 
 configFile = os.path.expanduser(os.path.join("~/", ".codeship"))
 
@@ -40,6 +40,25 @@ search_parser.add_argument(
     'search_action', action='store',
     help='codeship search <some_text>')
 
+# A create command
+codedeploy_parser = subparsers.add_parser(
+    'codedeploy', help='Search some text in the projects')
+codedeploy_parser.add_argument('-t', '--bundle-type',
+    default="zip", action='store', help='ex. bundle-type=zip')
+codedeploy_parser.add_argument('-b', '--s3-bucket',
+    default=None, action='store', help='ex. bundle-type=zip')
+codedeploy_parser.add_argument('-k', '--s3-bucket-key',
+    default=None, action='store', help='ex. bucket key')
+codedeploy_parser.add_argument('-l', '--log-refresh-time',
+    default=60, type=int, action='store', help='time to refresh log output')
+codedeploy_parser.add_argument('-c', '--deployment-config-name',
+    default='CodeDeployDefault.HalfAtATime', action='store', help='ex. CodeDeployDefault.HalfAtATime')
+codedeploy_parser.add_argument('-d', '--deployment-group',
+    default=[], action='append', dest="deployment_groups", help='codedeploy deployment groups')
+codedeploy_parser.add_argument(
+    'codedeploy_action', action='store',
+    help='codeship codedeploy <some_text>')
+
 info_parser = subparsers.add_parser(
     'info', help='Show info about a project')
 info_parser.add_argument(
@@ -59,20 +78,27 @@ if 'configure_action' in args:
     configure.command()
     exit()
 
-if not config['username']:
-    raise RequiredParamException("username is required!")
+def auth():
+    if not config['username']:
+        raise RequiredParamException("username is required!")
 
-if not config['organization']:
-    raise RequiredParamException("organization is required!")
+    if not config['organization']:
+        raise RequiredParamException("organization is required!")
 
-account_password = getpass.getpass(prompt='Codeship password: ')
-
-api = CodeShipAPI(organization_name=config['organization'], username=config['username'], password=account_password)
+    return getpass.getpass(prompt='Codeship password: ')
+print args
+if 'codedeploy_action' in args:
+    print("AWS Codeploy...")
+    codedeploy.command(args=args)
 
 if 'search_action' in args:
+    account_password = auth()
+    api = CodeShipAPI(organization_name=config['organization'], username=config['username'], password=account_password)
     print("Searching...")
     search.command(api=api, args=args, term=args.search_action)
 
 if 'info_action' in args:
+    account_password = auth()
+    api = CodeShipAPI(organization_name=config['organization'], username=config['username'], password=account_password)
     print("Info project %s" % args.info_action)
     info.command(api=api, project_uuid=args.info_action)

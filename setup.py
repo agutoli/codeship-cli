@@ -9,6 +9,7 @@ setup(
     install_requires=[
         'requests==2.18.4',
         'pyyaml==3.12',
+        'boto3==1.7.22'
     ],
     long_description=open('README.md').read(),
 )
