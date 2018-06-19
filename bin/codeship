@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 import yaml
 import getpass
 import os.path
@@ -44,6 +45,8 @@ codedeploy_parser.add_argument('-b', '--s3-bucket',
     default=None, action='store', help='ex. bundle-type=zip')
 codedeploy_parser.add_argument('-k', '--s3-bucket-key',
     default=None, action='store', help='ex. bucket key')
+codedeploy_parser.add_argument('-r', '--enable-rollback',
+    action='store_true', help='')
 codedeploy_parser.add_argument('-l', '--log-refresh-time',
     default=60, type=int, action='store', help='time to refresh log output')
 codedeploy_parser.add_argument('-c', '--deployment-config-name',

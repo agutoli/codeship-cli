@@ -59,7 +59,7 @@ def create_deployments(args):
             deploymentGroupName=deployment_group,
             deploymentConfigName=args.deployment_config_name,
             autoRollbackConfiguration={
-                "enabled": True,
+                "enabled": args.enable_rollback,
                 "events": [ "DEPLOYMENT_FAILURE" ]
             },
             revision={
@@ -77,6 +77,7 @@ def create_deployments(args):
     return deployments
 
 def command(args=None):
+
     started_time = datetime.datetime.now()
 
     deployments = deployments_going_on(args)
