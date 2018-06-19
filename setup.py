@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='codeship_cli',
-    version='0.0.4',
+    version='0.0.5',
     packages=['codeship_cli', 'codeship_cli.commands'],
     scripts=['bin/codeship'],
     description = 'Codeship client to help find text, see configurations by terminal',
