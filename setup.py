@@ -13,7 +13,7 @@ setup(
     download_url = 'https://github.com/agutoli/codeship-cli/archive/master.zip',
     keywords = ['codeship', 'ci', 'codedeploy'],
     install_requires=[
-        'requests==2.18.4',
+        'requests==2.20.0',
         'pyyaml==3.12',
         'boto3==1.7.22'
     ],
